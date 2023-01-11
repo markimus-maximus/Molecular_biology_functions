@@ -51,7 +51,7 @@ def get_triplicate_length(given_length):
 ~~~
 
 Inspection of the lengths of peptide sequences in the human peptide database revealed that there was a distribution resembling a gamma distribution (see figure below).
-![image](https://user-images.githubusercontent.com/107410852/211833865-e81c3faa-8154-48d5-bf6e-47b080eda376.png)
+![image](https://user-images.githubusercontent.com/107410852/211843926-bae5d65f-56a7-4f80-be0d-231cdaf6b9e4.png)
 
 Accordingly, a function `create_DNA_sequence_with_gamma_lengths` was written to generate a list of sequences with lengths representative of the natural lengths of peptides. This function uses much of the same code as the `randomly_generate_DNA_sequence` function, wth the addition of taking arguments for defining the shape and scale and using these as arguments for `np.random.gamma(shape,scale)`.
 
