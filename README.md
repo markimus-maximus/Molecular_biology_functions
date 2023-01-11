@@ -7,7 +7,8 @@ This project aims to simulate biological molecular biology processes using Pytho
 
 The first task was to generate a function which produces DNA sequences. The `def randomly_generate_DNA_sequence` function takes the maximum DNA sequence length as a positional argument. There is also an argument to declare whether to include methionine DNA as the first 3 bases, and a further argument for stop codon as the last 3 bases. This function can finally take into consideration the natural biases of bases. 
 
-~~~def randomly_generate_DNA_sequence(DNA_seq_max_length, met_first=False, stop_last = False, bp_weighting=False):
+~~~
+def randomly_generate_DNA_sequence(DNA_seq_max_length, met_first=False, stop_last = False, bp_weighting=False):
 
     #randomly generate a number between range
     
@@ -35,6 +36,30 @@ The first task was to generate a function which produces DNA sequences. The `def
         DNA_sequence[-3:] = ['A', 'C', 'T']
     #print(DNA_sequence)
     #print(f'len DNA sequ ={len(DNA_sequence)}')
-    return DNA_sequence~~~
+    return DNA_sequence
+    ~~~
+    
+An accessory function was written to convert a randomly generated DNA length to a triplicate length, in order to reflect the correct lengths of DNA.
+
+~~~
+def get_triplicate_length(given_length):
+    nearest_divisible_by_3 = round(given_length/3)
+    #print(f'nearest_div = {nearest_divisible_by_3}')
+    nearest_3_multiple = nearest_divisible_by_3 * 3 
+    #print(f'nearest_multiple = {nearest_3_multiple}')
+    return nearest_3_multiple
+~~~
+
+Inspection of the lengths of peptide sequences in the human peptide database revealed that there was a distribution resembling a gamma distribution (see figure below).
+![image](https://user-images.githubusercontent.com/107410852/211833865-e81c3faa-8154-48d5-bf6e-47b080eda376.png)
+
+Accordingly, a function `create_DNA_sequence_with_gamma_lengths` was written to generate a list of sequences with lengths representative of the natural lengths of peptides. This function uses much of the same code as the `randomly_generate_DNA_sequence` function, wth the addition of taking arguments for defining the shape and scale and using these as arguments for `np.random.gamma(shape,scale)`.
+
+The `create_multiple_DNA_sequences` function combines the above functions to create a number of DNA sequences according to the `number_DNA_sequences` argument.
+
+
+
+
+    
     
  
