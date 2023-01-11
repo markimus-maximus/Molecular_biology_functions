@@ -56,6 +56,13 @@ Accordingly, a function `create_DNA_sequence_with_gamma_lengths` was written to 
 
 The `create_multiple_DNA_sequences` function combines the above functions to create a number of DNA sequences according to the `number_DNA_sequences` argument.
 
+The below figure with gamma distribution looks comparable in distribution to the peptide lengths above.
+
+![image](https://user-images.githubusercontent.com/107410852/211847130-0b7bf42c-8d90-4fc6-9e3b-9829a29ce72e.png)
+
+## Transcribing DNA sequences
+
+Two functions `replace_thymidine_with_uracil(list_of_DNA_sequences)` and `transcribe_DNA_bases(list_of_DNA_sequences)` allow for transcription of the DNA into RNA.
 
 
 
