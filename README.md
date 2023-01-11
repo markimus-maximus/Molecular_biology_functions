@@ -62,10 +62,26 @@ The below figure with gamma distribution looks comparable in distribution to the
 
 ## Transcribing DNA sequences
 
-Two functions `replace_thymidine_with_uracil(list_of_DNA_sequences)` and `transcribe_DNA_bases(list_of_DNA_sequences)` allow for transcription of the DNA into RNA.
+Two functions `replace_thymidine_with_uracil(list_of_DNA_sequences)` and `transcribe_DNA_bases(list_of_DNA_sequences)` allow for transcription of the DNA into RNA. The returned in a list of RNA sequences which are the complimentary strand of the DNA sequences.
 
+## Translating RNA into amino acid sequence
 
+The function `encode_mRNA(mRNA_seqs)` takes an RNA sequence and splits it into chunks of 3 with the following code, where `num_amino_acids` is the number of splits:
+~~~
+for seq in mRNA_seqs:
+        seq_len = len(seq)
+        num_amino_acids = seq_len / 3
+        #print(f'num_amino_acids = {num_amino_acids}')
+        seq_array = np.array(seq)
+        list_of_arrays = np.split(seq_array, num_amino_acids)
+~~~
+Next, a list of codons is returned with:
+~~~
+list_of_codons = list(map(tuple, list_of_arrays))
+list_of_codon_seqs.append(list_of_codons)
+~~~
 
+Code was next required to convert lists of codons into peptide sequences, using the codon sequence as a dictionary key to get the associated amino acid (in single letter form annotation). This single letter is then appended to a list of peptide sequences.
     
     
  
