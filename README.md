@@ -37,8 +37,7 @@ def randomly_generate_DNA_sequence(DNA_seq_max_length, met_first=False, stop_las
     #print(DNA_sequence)
     #print(f'len DNA sequ ={len(DNA_sequence)}')
     return DNA_sequence
-    ~~~
-    
+~~~   
 An accessory function was written to convert a randomly generated DNA length to a triplicate length, in order to reflect the correct lengths of DNA.
 
 ~~~
