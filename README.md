@@ -49,7 +49,7 @@ def get_triplicate_length(given_length):
     return nearest_3_multiple
 ~~~
 
-Inspection of the lengths of peptide sequences in the human peptide database revealed that there was a distribution resembling a gamma distribution (see figure below).
+To get an idea of the length distribution of protein sequences in the human peptide database, `get_protien_length_list` function was written which returns a list of protein lengths. Inspection of the lengths of peptide sequences revealed that there was a distribution resembling a gamma distribution (see figure below).
 ![image](https://user-images.githubusercontent.com/107410852/211844300-b85bf911-1cc5-4d5d-856d-65754692c092.png)
 
 Accordingly, a function `create_DNA_sequence_with_gamma_lengths` was written to generate a list of sequences with lengths representative of the natural lengths of peptides. This function uses much of the same code as the `randomly_generate_DNA_sequence` function, wth the addition of taking arguments for defining the shape and scale and using these as arguments for `np.random.gamma(shape,scale)`.
@@ -81,7 +81,38 @@ list_of_codons = list(map(tuple, list_of_arrays))
 list_of_codon_seqs.append(list_of_codons)
 ~~~
 
-Code was next required to convert lists of codons into peptide sequences, using the codon sequence as a dictionary key to get the associated amino acid (in single letter form annotation). This single letter is then appended to a list of peptide sequences.
-    
+
+Code was next required to convert lists of codons into peptide sequences, using the codon sequence as a dictionary key to get the associated amino acid (in single letter form annotation). This single letter is then appended to a list of peptide sequences. To achieve this the `turn_codons_into_peptide_sequence` function was created which takes a list of codon lists as an argument and iteratively works through each codon list to convert the codon into an amino acid, according to the below dictionary:
+
+~~~
+                ("A","A","A"):"K", ("A","A","C"):"N",  ("A","A","G"):"K",   ("A","A","U"):"N", 
+                ("A","C","A"):"T", ("A","C","C"):"T",  ("A","C","G"):"T",   ("A","C","U"):"T", 
+                ("A","G","A"):"R", ("A","G","C"):"S",  ("A","G","G"):"R",   ("A","G","U"):"S", 
+                ("A","U","A"):"I", ("A","U","C"):"I",  ("A","U","G"):"M",   ("A","U","U"):"I", 
+
+                ("C","A","A"):"Q", ("C","A","C"):"H",  ("C","A","G"):"Q",   ("C","A","U"):"H", 
+                ("C","C","A"):"P", ("C","C","C"):"P",  ("C","C","G"):"P",   ("C","C","U"):"P", 
+                ("C","G","A"):"R", ("C","G","C"):"R",  ("C","G","G"):"R",   ("C","G","U"):"R", 
+                ("C","U","A"):"L", ("C","U","C"):"L",  ("C","U","G"):"L",   ("C","U","U"):"L", 
+
+                ("G","A","A"):"E", ("G","A","C"):"D",  ("G","A","G"):"E",   ("G","A","U"):"D", 
+                ("G","C","A"):"A", ("G","C","C"):"A",  ("G","C","G"):"A",   ("G","C","U"):"A", 
+                ("G","G","A"):"G", ("G","G","C"):"G",  ("G","G","G"):"G",   ("G","G","U"):"G", 
+                ("G","U","A"):"V", ("G","U","C"):"V",  ("G","U","G"):"V",   ("G","U","U"):"V", 
+
+                ("U","A","A"):"_", ("U","A","C"):"Y",  ("U","A","G"):"_",   ("U","A","U"):"T", 
+                ("U","C","A"):"S", ("U","C","C"):"S",  ("U","C","G"):"S",   ("U","C","U"):"S", 
+                ("U","G","A"):"_", ("U","G","C"):"C",  ("U","G","G"):"W",   ("U","G","U"):"C", 
+                ("U","U","A"):"L", ("U","U","C"):"F",  ("U","U","G"):"L",   ("U","U","U"):"F"}
+~~~
+In addition to using DNA sequences to create peptide sequences, a further approach was to use codons as the starting point for p for peptide sequence generation. The advantage to this approach is that codons can be chosen according to their natural biases. In approaching this, `make_seq_from_codons` function was written. Similarly to creating DNA sequences above, a positional argument is the maximum DNA length. In addition, there are arguments available to define the first codon as a methionine reside (met_first argument), and an option to remove stop codons (to prevent premature truncation of sequences, no_stops argument). Finally, as with DNA sequence generation (above) there is an option to use gamma distribution for sequence lengths (gamma_dist argument). Interestingly, having stop codons available to choose from when constructing the peptide sequences generated a gamma distribution without the need for applying gamma distribution. It is therefore tempting to say that the random insertion of stop codons which occurs naturally results in the gamma distribution observed of peptide sequences.
+
+## Processing peptide sequences and searching for matches
+The function `will_the_peptide_translate` was written to determine if the protein would translate by assessing if there was a methionine in residue position 1 and stop codon in the last residue position. Room for improvement here could be to search for an in frame methionine if it is not the first residue position, and generate the protein sequence from here. 
+
+To enable search functions with protein sequences the generated peptide sequences with `list` datatype were converted to `str` sequence with the `list_to_string` function. After creating a list of DNA sequence string, the search_protein function was written. This function takes the list of protein sequences and a path to a protein database to return a list of matches. To achieve the sequence alignments, the `Align` class from the `Bio` library was utilised. Later, the needleman-wunsch algorithm was written which can create aligignments between proteins.
+
+
+
     
  
