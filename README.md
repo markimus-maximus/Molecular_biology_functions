@@ -1,4 +1,4 @@
-# Biology_fun
+# Molecular_biology_functions
 
 This project aims to simulate biological molecular biology processes using Python code. An overview of the project workflow is in the below image:
 ![image](https://user-images.githubusercontent.com/107410852/211831557-46748cc1-a487-456d-8693-f54b107d2adf.png)
